@@ -4,7 +4,7 @@ pkgver=0.16.1
 pkgrel=1
 pkgdesc="A sophisticated standalone keyboard launcher."
 arch=('i686' 'x86_64' 'armv7h')
-url="https://github.com/albertlauncher"
+url="https://github.com/Elektropepi"
 license=('GPL')
 depends=(
   'qt5-charts'
@@ -30,10 +30,9 @@ optdepends=(
   'python: Python extension'
   'virtualbox: VirtualBox plugin'
 )
-#source=("mirrors/albert::git+https://github.com/albertlauncher/albert.git#branch=dev"
-source=("mirrors/albert::git+https://github.com/albertlauncher/albert.git#tag=v${pkgver}"
-        "mirrors/plugins::git+https://github.com/albertlauncher/plugins.git"
-        "mirrors/python::git+https://github.com/albertlauncher/python.git"
+source=("mirrors/albert::git+https://github.com/Elektropepi/albert.git#branch=dev"
+        "mirrors/plugins::git+https://github.com/Elektropepi/plugins.git#branch=dev"
+        "mirrors/python::git+https://github.com/Elektropepi/python.git#branch=dev"
         "mirrors/pybind11::git+https://github.com/pybind/pybind11.git")
 md5sums=('SKIP' 'SKIP' 'SKIP' 'SKIP')
 
@@ -50,7 +49,6 @@ prepare() {
   git config submodule.python/pybind11.url $srcdir/pybind11
   git config submodule.python/share/modules.url $srcdir/python
   git submodule update python/pybind11 python/share/modules
-
 }
 
 
@@ -77,6 +75,7 @@ build() {
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_INSTALL_LIBDIR=lib \
     -DCMAKE_BUILD_TYPE="RelWithDebInfo  " \
+    -DBUILD_VIRTUALBOX=ON \
     -Wno-dev
 
     # Maybe you want to add some of those
@@ -100,7 +99,6 @@ build() {
     #-DBUILD_SYSTEM=ON
     #-DBUILD_TEMPLATE=OFF
     #-DBUILD_TERMINAL=ON
-    #-DBUILD_VIRTUALBOX=ON
 
   #VERBOSE=1 make
   make
